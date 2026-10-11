@@ -1638,6 +1638,978 @@
       color: var(--cyan);
     }
 
+    /* =========================================================
+       HERO PROFILE CARD & AI AVATAR SWITCHER
+       ========================================================= */
+    .hero-profile-card {
+      background: var(--bg-glass-elevated);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(56, 189, 248, 0.12);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .hero-profile-card::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .profile-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.8rem;
+    }
+
+    .live-pulse-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--emerald);
+      background: var(--emerald-soft);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      animation: pulse-emerald 1.8s infinite;
+    }
+
+    .hero-avatar-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .avatar-image-container {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.2);
+      background: #06080e;
+    }
+
+    .avatar-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+    }
+
+    .avatar-image-container:hover .avatar-photo {
+      transform: scale(1.03);
+    }
+
+    .avatar-overlay-badge {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(6, 8, 14, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .avatar-switcher-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+      width: fit-content;
+    }
+
+    .switcher-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      padding: 0.4rem 0.95rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .switcher-btn:hover {
+      color: var(--text-main);
+    }
+
+    .switcher-btn.active {
+      background: linear-gradient(135deg, var(--cyan), #2563eb);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+    }
+
+    .hero-coding-pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .coding-pill {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.5rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .coding-pill:hover {
+      transform: translateY(-2px);
+      border-color: var(--cyan);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .pill-lc:hover { border-color: #FFA116; }
+    .pill-hr:hover { border-color: #2EC866; }
+    .pill-cc:hover { border-color: #F89C1D; }
+
+    .pill-title {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .pill-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+    }
+
+    .mini-telemetry-box {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .val-up {
+      color: var(--emerald);
+      font-weight: 700;
+    }
+
+    .telemetry-bar-bg {
+      height: 4px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .telemetry-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      border-radius: 99px;
+    }
+
+    .telemetry-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 0.1rem;
+    }
+
+    /* =========================================================
+       ABOUT ME SECTION
+       ========================================================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .about-grid {
+        grid-template-columns: 1.25fr 1fr;
+      }
+    }
+
+    .about-bio-card {
+      background: var(--bg-glass-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .about-lead-quote {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--text-main);
+      border-left: 3px solid var(--cyan);
+      padding-left: 1.2rem;
+    }
+
+    .about-text {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+
+    .about-highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .about-highlight-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+    }
+
+    .highlight-label {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .highlight-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-top: 0.2rem;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    @media (max-width: 640px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pillar-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: all 0.25s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--cyan);
+      background: var(--bg-glass-elevated);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .pillar-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--cyan-soft);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--cyan);
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+    }
+
+    .pillar-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .pillar-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       CODING PROFILES HUB (LEETCODE, HACKERRANK, CODECHEF)
+       ========================================================= */
+    .profiles-stats-banner {
+      background: linear-gradient(135deg, rgba(13, 19, 33, 0.9), rgba(19, 28, 48, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 2rem;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-stat {
+      border-left: 2px solid var(--border-subtle);
+      padding-left: 1.2rem;
+    }
+
+    .banner-stat:first-child {
+      border-left: 2px solid var(--cyan);
+    }
+
+    .banner-val {
+      font-size: 2.1rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+    }
+
+    .banner-val.cyan { color: var(--cyan); }
+    .banner-val.amber { color: var(--amber); }
+    .banner-val.emerald { color: var(--emerald); }
+
+    .banner-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .platform-card {
+      background: var(--bg-glass-elevated);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .platform-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-leetcode:hover {
+      border-color: rgba(255, 161, 22, 0.6);
+      box-shadow: 0 20px 45px rgba(255, 161, 22, 0.15);
+    }
+
+    .card-hackerrank:hover {
+      border-color: rgba(46, 200, 102, 0.6);
+      box-shadow: 0 20px 45px rgba(46, 200, 102, 0.15);
+    }
+
+    .card-codechef:hover {
+      border-color: rgba(248, 156, 29, 0.6);
+      box-shadow: 0 20px 45px rgba(248, 156, 29, 0.15);
+    }
+
+    .platform-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .platform-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .platform-logo-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+    }
+
+    .logo-lc { background: rgba(255, 161, 22, 0.15); color: #FFA116; border: 1px solid rgba(255, 161, 22, 0.35); }
+    .logo-hr { background: rgba(46, 200, 102, 0.15); color: #2EC866; border: 1px solid rgba(46, 200, 102, 0.35); }
+    .logo-cc { background: rgba(248, 156, 29, 0.15); color: #F89C1D; border: 1px solid rgba(248, 156, 29, 0.35); }
+
+    .platform-info-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .platform-handle {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .platform-verified-chip {
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    .platform-metric-headline {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 0.2rem 0;
+    }
+
+    .platform-big-num {
+      font-size: 2.8rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .num-lc { color: #FFA116; }
+    .num-hr { color: #2EC866; }
+    .num-cc { color: #F89C1D; }
+
+    .platform-metric-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* LeetCode Difficulty Distribution Bar */
+    .lc-distribution-bar {
+      display: flex;
+      height: 8px;
+      width: 100%;
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 0.8rem 0;
+      background: rgba(255, 255, 255, 0.08);
+      gap: 2px;
+    }
+
+    .lc-bar-easy { background: #00b8a3; height: 100%; border-radius: 99px 0 0 99px; }
+    .lc-bar-med { background: #ffc01e; height: 100%; }
+    .lc-bar-hard { background: #ff375f; height: 100%; border-radius: 0 99px 99px 0; }
+
+    .lc-stats-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .lc-tag-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    /* HackerRank Stars and Badges */
+    .hr-stars-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin: 0.5rem 0;
+    }
+
+    .hr-skill-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+    }
+
+    .hr-skill-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hr-stars-visual {
+      color: #fbbf24;
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+    }
+
+    .hr-sql-certified-badge {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hr-sql-certified-badge .badge-title {
+      font-weight: 700;
+      color: #34d399;
+      font-size: 0.88rem;
+    }
+
+    .platform-topics-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .topic-chip {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+    }
+
+    .platform-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem 1.2rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: auto;
+    }
+
+    .btn-lc {
+      background: linear-gradient(135deg, rgba(255, 161, 22, 0.2), rgba(255, 161, 22, 0.05));
+      border: 1px solid rgba(255, 161, 22, 0.4);
+      color: #FFA116;
+    }
+    .btn-lc:hover {
+      background: #FFA116;
+      color: #000;
+      box-shadow: 0 8px 25px rgba(255, 161, 22, 0.4);
+    }
+
+    .btn-hr {
+      background: linear-gradient(135deg, rgba(46, 200, 102, 0.2), rgba(46, 200, 102, 0.05));
+      border: 1px solid rgba(46, 200, 102, 0.4);
+      color: #2EC866;
+    }
+    .btn-hr:hover {
+      background: #2EC866;
+      color: #000;
+      box-shadow: 0 8px 25px rgba(46, 200, 102, 0.4);
+    }
+
+    .btn-cc {
+      background: linear-gradient(135deg, rgba(248, 156, 29, 0.2), rgba(248, 156, 29, 0.05));
+      border: 1px solid rgba(248, 156, 29, 0.4);
+      color: #F89C1D;
+    }
+    .btn-cc:hover {
+      background: #F89C1D;
+      color: #000;
+      box-shadow: 0 8px 25px rgba(248, 156, 29, 0.4);
+    }
+
+    /* DSA Approach Methodology Card */
+    .dsa-approach-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 2.2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 840px) {
+      .dsa-approach-card {
+        grid-template-columns: 1fr 1.6fr;
+        align-items: center;
+      }
+    }
+
+    .dsa-steps-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .dsa-step-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem;
+    }
+
+    .dsa-step-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .dsa-step-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0.2rem 0;
+    }
+
+    .dsa-step-desc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    /* =========================================================
+       INTERACTIVE SQL & ANALYTICS SANDBOX
+       ========================================================= */
+    .sql-sandbox-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.7);
+    }
+
+    .sandbox-topbar {
+      background: rgba(12, 16, 26, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.9rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .sandbox-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .query-selector-tabs {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.8rem 1.4rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid var(--border-subtle);
+      overflow-x: auto;
+    }
+
+    .query-tab {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .query-tab:hover {
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .query-tab.active {
+      background: var(--cyan-soft);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .sandbox-editor-section {
+      padding: 1.4rem;
+      background: #060912;
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .sql-code-display {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .sql-kw { color: #38bdf8; font-weight: 700; }
+    .sql-fn { color: #fbbf24; }
+    .sql-str { color: #34d399; }
+    .sql-cmt { color: #64748b; font-style: italic; }
+
+    .sandbox-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn-run-query {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--emerald), #059669);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(52, 211, 153, 0.3);
+    }
+
+    .btn-run-query:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(52, 211, 153, 0.5);
+    }
+
+    .sandbox-telemetry-badge {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .sandbox-result-area {
+      padding: 1.4rem;
+      background: var(--bg-surface);
+    }
+
+    .result-table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .table-container-scroll {
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+
+    .sandbox-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    .sandbox-table th {
+      background: rgba(12, 17, 28, 0.95);
+      color: var(--cyan);
+      padding: 0.7rem 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+
+    .sandbox-table td {
+      padding: 0.65rem 1rem;
+      color: var(--text-main);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+    }
+
+    .sandbox-table tr:hover td {
+      background: rgba(56, 189, 248, 0.04);
+    }
+
+    .sql-insight-box {
+      margin-top: 1.2rem;
+      padding: 1rem 1.2rem;
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .sql-insight-text {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .sql-insight-text strong {
+      color: var(--cyan);
+    }
+
+    /* =========================================================
+       RECRUITER FAQ / Q&A SECTION
+       ========================================================= */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+
+    @media (min-width: 768px) {
+      .faq-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .faq-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: all 0.25s ease;
+    }
+
+    .faq-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+      background: var(--bg-glass-elevated);
+      transform: translateY(-2px);
+    }
+
+    .faq-tag {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .faq-question {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .faq-answer {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
     /* Accessibility reduced motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1664,11 +2636,15 @@
           <span>Laksh Thakur</span>
         </a>
         <ul class="nav-links">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#profiles" class="nav-link">Coding Profiles</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#sql-sandbox" class="nav-link">SQL Console</a></li>
           <li><a href="#pipeline" class="nav-link">Data Flow</a></li>
           <li><a href="#skills" class="nav-link">Skills</a></li>
           <li><a href="#experience" class="nav-link">Experience</a></li>
           <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#faq" class="nav-link">Q&amp;A</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
         <a href="#contact" class="nav-cta">
@@ -1700,13 +2676,17 @@
           </div>
 
           <p class="hero-lead">
-            I'm a B.Tech IT student &amp; aspiring Data Analyst based in Bhopal, India. I specialize in turning complex, messy data into high-conviction business decisions using SQL, Python, Pandas, and interactive Power BI dashboards.
+            I'm a B.Tech IT student &amp; aspiring Data Analyst based in Bhopal, India. With <strong>283+ algorithmic questions solved</strong> across LeetCode &amp; CodeChef, HackerRank multi-star badges, and hands-on data internships, I specialize in converting raw transactional data into high-conviction decisions using SQL, Python, Pandas, and Power BI.
           </p>
 
           <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">
               <span>Explore Bento Projects</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+            </a>
+            <a href="#profiles" class="btn btn-glass">
+              <span>Coding Profiles (283+)</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </a>
             <button class="btn btn-glass" id="btn-copy-email">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -1715,56 +2695,92 @@
           </div>
 
           <div class="hero-socials">
-            <a href="https://www.linkedin.com/in/laksh-thakur-56752a237" target="_blank" rel="noopener" class="social-btn">
+            <a href="https://www.linkedin.com/in/laksh-thakur-56752a237" target="_blank" rel="noopener" class="social-btn" title="LinkedIn Profile">
               <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
               <span>LinkedIn</span>
             </a>
-            <a href="https://github.com/" target="_blank" rel="noopener" class="social-btn">
+            <a href="https://leetcode.com/u/Laksh_Thakur/" target="_blank" rel="noopener" class="social-btn" title="LeetCode Profile: 155 Solved">
+              <span style="font-weight:800; color:#FFA116; font-size:0.85rem; font-family:var(--font-mono);">LC</span>
+              <span>LeetCode (155)</span>
+            </a>
+            <a href="https://www.hackerrank.com/profile/lakshthakre922" target="_blank" rel="noopener" class="social-btn" title="HackerRank Profile: 4★ C++, 3★ Python, SQL Basic">
+              <span style="font-weight:800; color:#2EC866; font-size:0.85rem; font-family:var(--font-mono);">HR</span>
+              <span>HackerRank (4★)</span>
+            </a>
+            <a href="https://www.codechef.com/users/tiny_snow_74" target="_blank" rel="noopener" class="social-btn" title="CodeChef Profile: 128 Solved">
+              <span style="font-weight:800; color:#F89C1D; font-size:0.85rem; font-family:var(--font-mono);">CC</span>
+              <span>CodeChef (128)</span>
+            </a>
+            <a href="https://github.com/" target="_blank" rel="noopener" class="social-btn" title="GitHub Profile">
               <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
               <span>GitHub</span>
             </a>
           </div>
         </div>
 
-        <!-- Glass Analytics Terminal Showcase -->
-        <div class="hero-card-preview">
-          <div class="preview-header">
+        <!-- Glass Hero Profile Card with AI Avatar and Image Switcher -->
+        <div class="hero-profile-card">
+          <div class="profile-card-header">
             <div class="terminal-dots">
               <span class="terminal-dot dot-red"></span>
               <span class="terminal-dot dot-yellow"></span>
               <span class="terminal-dot dot-green"></span>
             </div>
-            <span class="preview-tab-label">laksh_data_engine.py</span>
-          </div>
-
-          <div class="metric-grid-mini">
-            <div class="mini-stat">
-              <span class="mini-stat-title">Query Accuracy</span>
-              <div class="mini-stat-val">99.8%</div>
-            </div>
-            <div class="mini-stat">
-              <span class="mini-stat-title">B.Tech CGPA</span>
-              <div class="mini-stat-val gold">7.86</div>
+            <span class="preview-tab-label">laksh_intelligence_hub.ai</span>
+            <div class="live-pulse-badge">
+              <span class="live-dot"></span> Ready to Deploy
             </div>
           </div>
 
-          <div class="mini-chart-container">
-            <div class="mini-chart-title">
+          <!-- Avatar Image Display & Switcher -->
+          <div class="hero-avatar-wrapper">
+            <div class="avatar-image-container">
+              <img id="hero-avatar-img" src="assets/laksh_ai_avatar.jpg" alt="Laksh Thakur - Data Analyst & AI Engineer" class="avatar-photo" />
+              <div class="avatar-overlay-badge" id="avatar-mode-label">
+                <span>✨ AI Cyber Data Persona</span>
+              </div>
+            </div>
+
+            <!-- Interactive Mode Switcher -->
+            <div class="avatar-switcher-bar">
+              <button type="button" class="switcher-btn active" id="btn-avatar-ai" onclick="switchAvatar('ai')">
+                <span>✨ AI Cyber Avatar</span>
+              </button>
+              <button type="button" class="switcher-btn" id="btn-avatar-real" onclick="switchAvatar('real')">
+                <span>📷 Real Portrait</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Key Metrics Pill Row -->
+          <div class="hero-coding-pills">
+            <a href="https://leetcode.com/u/Laksh_Thakur/" target="_blank" rel="noopener" class="coding-pill pill-lc">
+              <span class="pill-title">LeetCode</span>
+              <span class="pill-value">155 Solved</span>
+            </a>
+            <a href="https://www.hackerrank.com/profile/lakshthakre922" target="_blank" rel="noopener" class="coding-pill pill-hr">
+              <span class="pill-title">HackerRank</span>
+              <span class="pill-value">4★ C++ · 3★ Py</span>
+            </a>
+            <a href="https://www.codechef.com/users/tiny_snow_74" target="_blank" rel="noopener" class="coding-pill pill-cc">
+              <span class="pill-title">CodeChef</span>
+              <span class="pill-value">128 Solved</span>
+            </a>
+          </div>
+
+          <!-- Mini Terminal Telemetry -->
+          <div class="mini-telemetry-box">
+            <div class="telemetry-row">
               <span>SQL QUERY EFFICIENCY INDEX</span>
-              <span style="color:var(--emerald);">+42.6% vs baseline</span>
+              <span class="val-up">+42.6% vs baseline</span>
             </div>
-            <svg class="mini-chart-svg" viewBox="0 0 320 80">
-              <defs>
-                <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
-                  <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
-                </linearGradient>
-              </defs>
-              <path d="M0,70 L25,62 L60,65 L100,45 L140,50 L180,32 L220,38 L260,18 L295,22 L320,10 L320,80 L0,80 Z" fill="url(#area-grad)"/>
-              <path d="M0,70 L25,62 L60,65 L100,45 L140,50 L180,32 L220,38 L260,18 L295,22 L320,10" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="260" cy="18" r="4" fill="#fbbf24"/>
-              <circle cx="320" cy="10" r="4" fill="#38bdf8"/>
-            </svg>
+            <div class="telemetry-bar-bg">
+              <div class="telemetry-bar-fill" style="width: 86%;"></div>
+            </div>
+            <div class="telemetry-meta">
+              <span>HackerRank SQL: Certified ✓</span>
+              <span>B.Tech CGPA: 7.86</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1772,20 +2788,324 @@
       <!-- Quick Metrics Bar -->
       <div class="stats-bar">
         <div class="stat-box">
-          <div class="stat-num">4</div>
-          <div class="stat-label">End-to-End Projects</div>
+          <div class="stat-num">155<span>+</span></div>
+          <div class="stat-label">LeetCode Questions Solved</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">128<span>+</span></div>
+          <div class="stat-label">CodeChef Problems Solved</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">4<span>★</span> / 3<span>★</span></div>
+          <div class="stat-label">HackerRank C++ &amp; Python</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">SQL<span>✓</span></div>
+          <div class="stat-label">HackerRank Basic Certified</div>
         </div>
         <div class="stat-box">
           <div class="stat-num">2<span>x</span></div>
-          <div class="stat-label">Smart India Hackathon</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num">8</div>
-          <div class="stat-label">Verified Certifications</div>
+          <div class="stat-label">Smart India Hackathon Finalist</div>
         </div>
         <div class="stat-box">
           <div class="stat-num">7.86</div>
-          <div class="stat-label">Academic CGPA</div>
+          <div class="stat-label">Academic CGPA (IT)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          About Laksh Thakur
+        </div>
+        <h2 class="section-title">Analytical Mindset, Algorithmic Discipline</h2>
+        <p class="section-desc">Bridging the gap between raw database transactions, algorithmic problem solving, and production-ready intelligent workflows.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-bio-card">
+          <div class="about-lead-quote">
+            "Data is more than numbers in a table; it's the operational heartbeat of an organization. My mission is to dissect messy relational schemas and surface high-conviction insights."
+          </div>
+          <p class="about-text">
+            I am a B.Tech Information Technology student at Bansal Institute of Science &amp; Technology, Bhopal. My engineering journey is built upon a dual foundation: rigorous algorithmic problem solving on competitive platforms (with <strong>155+ LeetCode problems</strong>, <strong>128+ CodeChef problems</strong>, and <strong>4★ / 3★ on HackerRank</strong>) combined with practical enterprise data analytics using SQL, Python, and Power BI.
+          </p>
+          <p class="about-text">
+            Through real-world internships at <strong>Codec</strong> (Data Analytics Intern) and <strong>CodeAlpha</strong> (C++ Programming Intern), alongside serving as a two-time Team Leader in the <strong>Smart India Hackathon</strong>, I have cultivated the ability to lead technical teams, model resilient database schemas, and communicate complex findings to stakeholders.
+          </p>
+
+          <div class="about-highlights-grid">
+            <div class="about-highlight-item">
+              <div class="highlight-label">Primary Focus</div>
+              <div class="highlight-value">Data Analytics &amp; SQL</div>
+            </div>
+            <div class="about-highlight-item">
+              <div class="highlight-label">Location</div>
+              <div class="highlight-value">Bhopal, MP, India</div>
+            </div>
+            <div class="about-highlight-item">
+              <div class="highlight-label">Degree</div>
+              <div class="highlight-value">B.Tech IT (Sem 5)</div>
+            </div>
+            <div class="about-highlight-item">
+              <div class="highlight-label">Availability</div>
+              <div class="highlight-value">Immediate (Roles/Intern)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-icon-box">01</div>
+            <h4 class="pillar-title">Algorithmic Rigor</h4>
+            <p class="pillar-desc">283+ total coding problems solved across LeetCode and CodeChef. Strong intuition for Big-O time-space trade-offs and edge-case testing.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-box">02</div>
+            <h4 class="pillar-title">Relational SQL Mastery</h4>
+            <p class="pillar-desc">HackerRank SQL (Basic) certified. Skilled in CTEs, window functions, aggregations, query execution plans, and schema indexing.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-box">03</div>
+            <h4 class="pillar-title">Business Intelligence</h4>
+            <p class="pillar-desc">Translating ambiguous questions into clean Pandas transformations, statistical EDA, and intuitive Power BI executive dashboards.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-box">04</div>
+            <h4 class="pillar-title">Agentic AI Architecture</h4>
+            <p class="pillar-desc">Pioneering multi-worker LLM agent graphs with LangGraph and Groq, enforcing Pydantic validation and resilient error handling.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coding Profiles & Competitive Programming Hub -->
+    <section id="profiles" class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Algorithmic Rigor &amp; Problem Solving
+        </div>
+        <h2 class="section-title">Coding Profiles &amp; Competitive Mastery</h2>
+        <p class="section-desc">Consistent problem-solving track record across LeetCode, HackerRank, and CodeChef demonstrating algorithmic mastery, data structure proficiency, and database querying excellence.</p>
+      </div>
+
+      <!-- Stats Banner -->
+      <div class="profiles-stats-banner">
+        <div class="banner-stat">
+          <div class="banner-val cyan">283+</div>
+          <div class="banner-label">Total Coding Problems Solved</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-val amber">155</div>
+          <div class="banner-label">LeetCode Questions Solved</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-val emerald">128</div>
+          <div class="banner-label">CodeChef Problems Solved</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-val">4★ / 3★</div>
+          <div class="banner-label">HackerRank C++ &amp; Python</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-val cyan">SQL Basic</div>
+          <div class="banner-label">HackerRank Certified Skill</div>
+        </div>
+      </div>
+
+      <!-- 3 Feature Platform Cards -->
+      <div class="profiles-grid">
+        <!-- 1. LeetCode Card -->
+        <div class="platform-card card-leetcode">
+          <div>
+            <div class="platform-header">
+              <div class="platform-brand">
+                <div class="platform-logo-box logo-lc">LC</div>
+                <div>
+                  <h3 class="platform-info-title">LeetCode</h3>
+                  <span class="platform-handle">@Laksh_Thakur</span>
+                </div>
+              </div>
+              <span class="platform-verified-chip">Verified</span>
+            </div>
+
+            <div class="platform-metric-headline" style="margin-top: 1.2rem;">
+              <span class="platform-big-num num-lc">155</span>
+              <span class="platform-metric-label">Questions Solved</span>
+            </div>
+
+            <div class="lc-distribution-bar">
+              <div class="lc-bar-easy" style="width: 58%;" title="Easy: 90+ Solved"></div>
+              <div class="lc-bar-med" style="width: 36%;" title="Medium: 55+ Solved"></div>
+              <div class="lc-bar-hard" style="width: 6%;" title="Hard: 10 Solved"></div>
+            </div>
+
+            <div class="lc-stats-row">
+              <div><span class="lc-tag-dot" style="background:#00b8a3;"></span>Easy: 90+</div>
+              <div><span class="lc-tag-dot" style="background:#ffc01e;"></span>Medium: 55+</div>
+              <div><span class="lc-tag-dot" style="background:#ff375f;"></span>Hard: 10</div>
+            </div>
+
+            <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.55; margin-top:1.1rem;">
+              Focused on foundational Data Structures, Arrays, Two Pointers, Strings, Hash Maps, Binary Search, and SQL 50 database challenges.
+            </p>
+
+            <div class="platform-topics-chips">
+              <span class="topic-chip">Arrays</span>
+              <span class="topic-chip">Two Pointers</span>
+              <span class="topic-chip">Hash Table</span>
+              <span class="topic-chip">Strings</span>
+              <span class="topic-chip">SQL 50</span>
+              <span class="topic-chip">Binary Search</span>
+            </div>
+          </div>
+
+          <a href="https://leetcode.com/u/Laksh_Thakur/" target="_blank" rel="noopener" class="platform-cta-btn btn-lc">
+            <span>View LeetCode Profile</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+          </a>
+        </div>
+
+        <!-- 2. HackerRank Card -->
+        <div class="platform-card card-hackerrank">
+          <div>
+            <div class="platform-header">
+              <div class="platform-brand">
+                <div class="platform-logo-box logo-hr">HR</div>
+                <div>
+                  <h3 class="platform-info-title">HackerRank</h3>
+                  <span class="platform-handle">@lakshthakre922</span>
+                </div>
+              </div>
+              <span class="platform-verified-chip">Verified</span>
+            </div>
+
+            <div class="hr-stars-row" style="margin-top: 1.2rem;">
+              <div class="hr-skill-badge">
+                <div class="hr-skill-name">
+                  <span style="color:#38bdf8; font-weight:800; font-family:var(--font-mono);">C++</span>
+                  <span>Programming</span>
+                </div>
+                <div class="hr-stars-visual" title="4-Star in C++">★★★★<span style="color:rgba(255,255,255,0.2);">★</span></div>
+              </div>
+
+              <div class="hr-skill-badge">
+                <div class="hr-skill-name">
+                  <span style="color:#fbbf24; font-weight:800; font-family:var(--font-mono);">Python</span>
+                  <span>Language</span>
+                </div>
+                <div class="hr-stars-visual" title="3-Star in Python">★★★<span style="color:rgba(255,255,255,0.2);">★★</span></div>
+              </div>
+
+              <div class="hr-sql-certified-badge">
+                <div>
+                  <div class="badge-title">SQL (Basic) Certified</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">Verified Assessment</div>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              </div>
+            </div>
+
+            <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.55; margin-top:1.1rem;">
+              Demonstrated mastery in Object-Oriented C++, memory management, Python scripting, and relational SQL querying.
+            </p>
+
+            <div class="platform-topics-chips">
+              <span class="topic-chip">4-Star C++</span>
+              <span class="topic-chip">3-Star Python</span>
+              <span class="topic-chip">SQL Basic Certified</span>
+              <span class="topic-chip">Problem Solving</span>
+            </div>
+          </div>
+
+          <a href="https://www.hackerrank.com/profile/lakshthakre922" target="_blank" rel="noopener" class="platform-cta-btn btn-hr">
+            <span>View HackerRank Profile</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+          </a>
+        </div>
+
+        <!-- 3. CodeChef Card -->
+        <div class="platform-card card-codechef">
+          <div>
+            <div class="platform-header">
+              <div class="platform-brand">
+                <div class="platform-logo-box logo-cc">CC</div>
+                <div>
+                  <h3 class="platform-info-title">CodeChef</h3>
+                  <span class="platform-handle">@tiny_snow_74</span>
+                </div>
+              </div>
+              <span class="platform-verified-chip">Verified</span>
+            </div>
+
+            <div class="platform-metric-headline" style="margin-top: 1.2rem;">
+              <span class="platform-big-num num-cc">128</span>
+              <span class="platform-metric-label">Questions Solved</span>
+            </div>
+
+            <div class="telemetry-bar-bg" style="margin: 0.8rem 0; height:8px;">
+              <div class="telemetry-bar-fill" style="width: 72%; background: linear-gradient(90deg, #F89C1D, #fbbf24);"></div>
+            </div>
+
+            <div class="lc-stats-row">
+              <div>Practice &amp; Contests</div>
+              <div style="color:#F89C1D; font-weight:700;">128 Solved</div>
+            </div>
+
+            <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.55; margin-top:1.1rem;">
+              Active competitive programming practice targeting edge-case resilience, rapid problem digestion, mathematical modeling, and time complexity optimization.
+            </p>
+
+            <div class="platform-topics-chips">
+              <span class="topic-chip">Competitive Math</span>
+              <span class="topic-chip">Greedy Algos</span>
+              <span class="topic-chip">Sorting &amp; Searching</span>
+              <span class="topic-chip">Fast I/O</span>
+            </div>
+          </div>
+
+          <a href="https://www.codechef.com/users/tiny_snow_74" target="_blank" rel="noopener" class="platform-cta-btn btn-cc">
+            <span>View CodeChef Profile</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Problem Solving Methodology Blueprint -->
+      <div class="dsa-approach-card">
+        <div>
+          <span class="section-tag" style="font-size:0.75rem; margin-bottom:0.5rem;">Methodology</span>
+          <h4 style="font-size:1.35rem; font-weight:800; color:var(--text-main);">My Algorithmic Strategy</h4>
+          <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.5; margin-top:0.4rem;">
+            Every problem is approached with mathematical rigor before writing a single line of code to guarantee optimal scalability.
+          </p>
+        </div>
+
+        <div class="dsa-steps-flow">
+          <div class="dsa-step-box">
+            <span class="dsa-step-num">01. DISSECT</span>
+            <h5 class="dsa-step-title">Constraint Analysis</h5>
+            <p class="dsa-step-desc">Analyze input boundaries (N ≤ 10⁵) to determine allowable Big-O complexity.</p>
+          </div>
+          <div class="dsa-step-box">
+            <span class="dsa-step-num">02. FORMULATE</span>
+            <h5 class="dsa-step-title">Optimal Invariant</h5>
+            <p class="dsa-step-desc">Select fitting data structure (HashMap, Heap, Two Pointers) to minimize overhead.</p>
+          </div>
+          <div class="dsa-step-box">
+            <span class="dsa-step-num">03. IMPLEMENT</span>
+            <h5 class="dsa-step-title">Clean Modular Code</h5>
+            <p class="dsa-step-desc">Write self-documenting code with defensive bounds checks and explicit naming.</p>
+          </div>
+          <div class="dsa-step-box">
+            <span class="dsa-step-num">04. STRESS TEST</span>
+            <h5 class="dsa-step-title">Edge-Case Proof</h5>
+            <p class="dsa-step-desc">Verify against empty inputs, duplicates, minimums, and overflow thresholds.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1981,6 +3301,75 @@
             <span class="chip">File Persistence</span>
             <span class="chip">Team Leadership</span>
             <span class="chip">Audit Log</span>
+          </div>
+        </div>
+    </section>
+
+    <!-- Interactive Live SQL & Analytics Query Console -->
+    <section id="sql-sandbox" class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          Practical Database Demonstration
+        </div>
+        <h2 class="section-title">Interactive SQL Query Console</h2>
+        <p class="section-desc">Test simulated SQL queries against realistic enterprise datasets. Experience how I write optimized window functions, multi-table joins, and business KPIs.</p>
+      </div>
+
+      <div class="sql-sandbox-card">
+        <div class="sandbox-topbar">
+          <div class="sandbox-title-wrap">
+            <div class="terminal-dots">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green"></span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.84rem; color:var(--text-main); font-weight:700;">laksh_analytics_db :: MySQL 8.0</span>
+          </div>
+          <div class="sandbox-telemetry-badge">
+            <span class="status-dot"></span>
+            <span>Query Engine: Online (Ready)</span>
+          </div>
+        </div>
+
+        <div class="query-selector-tabs">
+          <button type="button" class="query-tab active" data-query="0" onclick="selectQuery(0)">
+            <span>01. Customer Revenue Cohorts (Window Fns)</span>
+          </button>
+          <button type="button" class="query-tab" data-query="1" onclick="selectQuery(1)">
+            <span>02. Farmer Queue Wait Time Optimization</span>
+          </button>
+          <button type="button" class="query-tab" data-query="2" onclick="selectQuery(2)">
+            <span>03. High-Risk Transaction Anomaly Detection</span>
+          </button>
+        </div>
+
+        <div class="sandbox-editor-section">
+          <div class="sql-code-display" id="sql-query-code">-- Loading query...</div>
+          <div class="sandbox-controls-row">
+            <div style="font-size:0.78rem; font-family:var(--font-mono); color:var(--text-muted);">
+              Estimated Cost: <span style="color:var(--emerald);">0.014s (Index-backed)</span> · dialect: <strong>ANSI SQL / MySQL</strong>
+            </div>
+            <button type="button" class="btn-run-query" id="btn-run-query" onclick="runSandboxQuery()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Execute SQL Query</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sandbox-result-area">
+          <div class="result-table-header">
+            <span id="sandbox-execution-status">Query Results (5 rows returned in 12ms)</span>
+            <span style="color:var(--cyan); font-family:var(--font-mono);">FORMAT: TABULAR</span>
+          </div>
+          <div class="table-container-scroll" id="sandbox-table-output">
+            <!-- Rendered dynamically -->
+          </div>
+          <div class="sql-insight-box">
+            <span style="font-size:1.1rem;">💡</span>
+            <div class="sql-insight-text" id="sandbox-insight-text">
+              <strong>Business Insight:</strong> This query calculates running customer lifetime totals and groups churn risk into prioritized operational tiers.
+            </div>
           </div>
         </div>
       </div>
@@ -2243,6 +3632,52 @@
       </div>
     </section>
 
+    <!-- Recruiter FAQ / Q&A Section -->
+    <section id="faq" class="container">
+      <div class="section-header">
+        <div class="section-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Recruiter Quick Reference
+        </div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Key answers for technical hiring managers, team leads, and talent acquisition partners.</p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-card">
+          <span class="faq-tag">Role Targeting</span>
+          <h4 class="faq-question">What specific roles is Laksh actively seeking?</h4>
+          <p class="faq-answer">
+            I am actively targeting <strong>Data Analyst</strong>, <strong>Business Intelligence Analyst</strong>, <strong>Junior Data Engineer</strong>, and <strong>Python / SQL Software Engineer</strong> roles or high-impact internships. I excel at bridging raw relational schemas, analytical reporting, and autonomous agent scripting.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <span class="faq-tag">Algorithmic Foundation</span>
+          <h4 class="faq-question">How does Laksh's competitive coding background help in data roles?</h4>
+          <p class="faq-answer">
+            With <strong>155+ LeetCode problems</strong>, <strong>128+ CodeChef problems</strong>, and a <strong>4-star HackerRank C++ rating</strong>, I bring rigorous time/space complexity awareness. In data work, this translates to writing optimized SQL joins without costly full-table scans, vectorized Pandas routines, and robust edge-case validation.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <span class="faq-tag">Technical Tooling</span>
+          <h4 class="faq-question">What are Laksh's strongest daily tools and technologies?</h4>
+          <p class="faq-answer">
+            My daily stack includes <strong>SQL</strong> (MySQL, PostgreSQL syntax, Window Functions, CTEs), <strong>Python</strong> (Pandas, NumPy, Matplotlib, Pydantic), <strong>Power BI</strong> (DAX, Star Schema, interactive reporting), <strong>C++</strong> (OOP &amp; memory efficiency), and <strong>LangGraph</strong> for building multi-worker agentic pipelines.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <span class="faq-tag">Availability &amp; Location</span>
+          <h4 class="faq-question">Is Laksh available for relocation or remote opportunities?</h4>
+          <p class="faq-answer">
+            Yes! I am based in Bhopal, MP, India, and I am available for immediate internships or full-time associate opportunities across major tech hubs (Bangalore, Hyderabad, Pune, Mumbai, Delhi-NCR, Bhopal) as well as remote positions globally.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact & Connect -->
     <section id="contact" class="container">
       <div class="contact-card">
@@ -2271,10 +3706,22 @@
             </a>
           </div>
 
-          <div class="hero-socials">
+          <div class="hero-socials" style="flex-wrap:wrap;">
             <a href="https://www.linkedin.com/in/laksh-thakur-56752a237" target="_blank" rel="noopener" class="social-btn">
               <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
-              <span>LinkedIn Profile</span>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://leetcode.com/u/Laksh_Thakur/" target="_blank" rel="noopener" class="social-btn">
+              <span style="font-weight:800; color:#FFA116; font-size:0.85rem; font-family:var(--font-mono);">LC</span>
+              <span>LeetCode (155)</span>
+            </a>
+            <a href="https://www.hackerrank.com/profile/lakshthakre922" target="_blank" rel="noopener" class="social-btn">
+              <span style="font-weight:800; color:#2EC866; font-size:0.85rem; font-family:var(--font-mono);">HR</span>
+              <span>HackerRank (4★)</span>
+            </a>
+            <a href="https://www.codechef.com/users/tiny_snow_74" target="_blank" rel="noopener" class="social-btn">
+              <span style="font-weight:800; color:#F89C1D; font-size:0.85rem; font-family:var(--font-mono);">CC</span>
+              <span>CodeChef (128)</span>
             </a>
             <a href="https://github.com/" target="_blank" rel="noopener" class="social-btn">
               <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
@@ -2321,10 +3768,19 @@
 
   <!-- Quick Floating Dock -->
   <div class="floating-dock">
-    <a href="https://www.linkedin.com/in/laksh-thakur-56752a237" target="_blank" rel="noopener" class="dock-btn" aria-label="LinkedIn">
+    <a href="https://www.linkedin.com/in/laksh-thakur-56752a237" target="_blank" rel="noopener" class="dock-btn" aria-label="LinkedIn" title="LinkedIn">
       <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
     </a>
-    <a href="mailto:lakshthakre922@gmail.com" class="dock-btn" aria-label="Email">
+    <a href="https://leetcode.com/u/Laksh_Thakur/" target="_blank" rel="noopener" class="dock-btn" aria-label="LeetCode" title="LeetCode (155 Solved)">
+      <span style="font-weight:800; color:#FFA116; font-size:0.82rem; font-family:var(--font-mono);">LC</span>
+    </a>
+    <a href="https://www.hackerrank.com/profile/lakshthakre922" target="_blank" rel="noopener" class="dock-btn" aria-label="HackerRank" title="HackerRank (4★ C++, 3★ Python, SQL)">
+      <span style="font-weight:800; color:#2EC866; font-size:0.82rem; font-family:var(--font-mono);">HR</span>
+    </a>
+    <a href="https://www.codechef.com/users/tiny_snow_74" target="_blank" rel="noopener" class="dock-btn" aria-label="CodeChef" title="CodeChef (128 Solved)">
+      <span style="font-weight:800; color:#F89C1D; font-size:0.82rem; font-family:var(--font-mono);">CC</span>
+    </a>
+    <a href="mailto:lakshthakre922@gmail.com" class="dock-btn" aria-label="Email" title="Email Me">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
     </a>
   </div>
@@ -2691,7 +4147,15 @@
     }
 
     /* Hero Typewriter */
-    const roles = ["SQL & Analytics", "Power BI Dashboards", "Python & Pandas", "Business Intelligence", "Problem Solving"];
+    const roles = [
+      "SQL & Analytics",
+      "155+ LeetCode Solved",
+      "Power BI Dashboards",
+      "HackerRank 4★ C++ & 3★ Py",
+      "128+ CodeChef Solved",
+      "Python & Pandas",
+      "Agentic AI & LangGraph"
+    ];
     let roleIdx = 0, charIdx = 0, isDeleting = false;
     const typewriterEl = document.getElementById("role-typewriter");
 
@@ -2745,6 +4209,193 @@
         link.classList.toggle("active", href === currentSecId);
       });
     });
+
+    /* Interactive Avatar Switcher */
+    function switchAvatar(mode) {
+      const img = document.getElementById("hero-avatar-img");
+      const label = document.getElementById("avatar-mode-label");
+      const btnAi = document.getElementById("btn-avatar-ai");
+      const btnReal = document.getElementById("btn-avatar-real");
+      if (!img || !label) return;
+
+      if (mode === "ai") {
+        img.style.opacity = "0.2";
+        setTimeout(() => {
+          img.src = "assets/laksh_ai_avatar.jpg";
+          img.style.opacity = "1";
+        }, 120);
+        label.innerHTML = `<span>✨ AI Cyber Data Persona</span>`;
+        if (btnAi) btnAi.classList.add("active");
+        if (btnReal) btnReal.classList.remove("active");
+      } else {
+        img.style.opacity = "0.2";
+        setTimeout(() => {
+          img.src = "assets/laksh_photo.jpg";
+          img.style.opacity = "1";
+        }, 120);
+        label.innerHTML = `<span>📷 Real Portrait</span>`;
+        if (btnReal) btnReal.classList.add("active");
+        if (btnAi) btnAi.classList.remove("active");
+      }
+    }
+
+    /* Interactive SQL & Analytics Sandbox Engine */
+    const SANDBOX_QUERIES = [
+      {
+        title: "01. Customer Revenue Cohorts & Window Functions",
+        code: `<span class="sql-kw">WITH</span> customer_metrics <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span>
+    c.customer_id,
+    c.customer_name,
+    c.region,
+    <span class="sql-fn">COUNT</span>(o.order_id) <span class="sql-kw">AS</span> total_orders,
+    <span class="sql-fn">SUM</span>(o.order_amount) <span class="sql-kw">AS</span> lifetime_value,
+    <span class="sql-fn">DENSE_RANK</span>() <span class="sql-kw">OVER</span> (
+      <span class="sql-kw">PARTITION BY</span> c.region 
+      <span class="sql-kw">ORDER BY</span> <span class="sql-fn">SUM</span>(o.order_amount) <span class="sql-kw">DESC</span>
+    ) <span class="sql-kw">AS</span> regional_rank
+  <span class="sql-kw">FROM</span> customers c
+  <span class="sql-kw">INNER JOIN</span> orders o <span class="sql-kw">ON</span> c.customer_id = o.customer_id
+  <span class="sql-kw">GROUP BY</span> c.customer_id, c.customer_name, c.region
+)
+<span class="sql-kw">SELECT</span>
+  customer_id,
+  customer_name,
+  region,
+  total_orders,
+  <span class="sql-fn">CONCAT</span>(<span class="sql-str">'$'</span>, <span class="sql-fn">FORMAT</span>(lifetime_value, 2)) <span class="sql-kw">AS</span> formatted_ltv,
+  regional_rank,
+  <span class="sql-kw">CASE</span>
+    <span class="sql-kw">WHEN</span> lifetime_value >= 12000 <span class="sql-kw">THEN</span> <span class="sql-str">'Tier-1 VIP'</span>
+    <span class="sql-kw">WHEN</span> lifetime_value >= 6000 <span class="sql-kw">THEN</span> <span class="sql-str">'Growth Account'</span>
+    <span class="sql-kw">ELSE</span> <span class="sql-str">'Standard'</span>
+  <span class="sql-kw">END</span> <span class="sql-kw">AS</span> cohort_segment
+<span class="sql-kw">FROM</span> customer_metrics
+<span class="sql-kw">WHERE</span> regional_rank &lt;= 3
+<span class="sql-kw">ORDER BY</span> region, regional_rank;`,
+        headers: ["ID", "Customer Name", "Region", "Total Orders", "Lifetime Value", "Regional Rank", "Cohort Segment"],
+        rows: [
+          ["#1042", "Apex Retail Corp", "North America", "48", "$24,850.00", "1", "<span style='color:var(--emerald); font-weight:700;'>Tier-1 VIP</span>"],
+          ["#1089", "Veritas Cloud Logistics", "North America", "31", "$18,400.00", "2", "<span style='color:var(--emerald); font-weight:700;'>Tier-1 VIP</span>"],
+          ["#1104", "Nordic Supply Systems", "Europe", "26", "$14,200.00", "1", "<span style='color:var(--emerald); font-weight:700;'>Tier-1 VIP</span>"],
+          ["#1152", "Aura Consumer Goods", "Europe", "19", "$8,950.00", "2", "<span style='color:var(--amber); font-weight:700;'>Growth Account</span>"],
+          ["#1210", "Singhania Agro Labs", "Asia-Pacific", "39", "$19,800.00", "1", "<span style='color:var(--emerald); font-weight:700;'>Tier-1 VIP</span>"]
+        ],
+        insight: "<strong>Business Takeaway:</strong> Tier-1 VIP clients drive 64.2% of total regional revenue with an average retention frequency of 2.8 orders/month. Partitioned ranking enables regional account managers to prioritize retention outreach without cross-region skew."
+      },
+      {
+        title: "02. Farmer Procurement Queue Latency Optimization",
+        code: `<span class="sql-kw">SELECT</span>
+  h.hub_name,
+  <span class="sql-fn">DATE</span>(q.scheduled_arrival) <span class="sql-kw">AS</span> intake_date,
+  <span class="sql-fn">COUNT</span>(q.ticket_id) <span class="sql-kw">AS</span> farmers_processed,
+  <span class="sql-fn">ROUND</span>(<span class="sql-fn">AVG</span>(<span class="sql-fn">TIMESTAMPDIFF</span>(MINUTE, q.scheduled_arrival, q.unloading_start)), 1) <span class="sql-kw">AS</span> avg_wait_mins,
+  <span class="sql-fn">ROUND</span>(<span class="sql-fn">SUM</span>(q.metric_tons), 2) <span class="sql-kw">AS</span> total_intake_tons,
+  <span class="sql-kw">CASE</span>
+    <span class="sql-kw">WHEN</span> <span class="sql-fn">AVG</span>(<span class="sql-fn">TIMESTAMPDIFF</span>(MINUTE, q.scheduled_arrival, q.unloading_start)) &lt; 25 <span class="sql-kw">THEN</span> <span class="sql-str">'Optimal (Green)'</span>
+    <span class="sql-kw">WHEN</span> <span class="sql-fn">AVG</span>(<span class="sql-fn">TIMESTAMPDIFF</span>(MINUTE, q.scheduled_arrival, q.unloading_start)) &lt; 45 <span class="sql-kw">THEN</span> <span class="sql-str">'Moderate Latency'</span>
+    <span class="sql-kw">ELSE</span> <span class="sql-str">'Severe Bottleneck'</span>
+  <span class="sql-kw">END</span> <span class="sql-kw">AS</span> queue_health
+<span class="sql-kw">FROM</span> procurement_queues q
+<span class="sql-kw">JOIN</span> intake_hubs h <span class="sql-kw">ON</span> q.hub_id = h.hub_id
+<span class="sql-kw">WHERE</span> q.status = <span class="sql-str">'COMPLETED'</span>
+<span class="sql-kw">GROUP BY</span> h.hub_name, <span class="sql-fn">DATE</span>(q.scheduled_arrival)
+<span class="sql-kw">ORDER BY</span> avg_wait_mins <span class="sql-kw">ASC</span>;`,
+        headers: ["Hub Facility", "Intake Date", "Farmers Processed", "Avg Wait (Mins)", "Total Tons", "Queue Status"],
+        rows: [
+          ["Bhopal Central Silo", "2026-10-09", "142", "18.4 mins", "482.5 MT", "<span style='color:var(--emerald); font-weight:700;'>Optimal (Green)</span>"],
+          ["Sehore Grain Depot", "2026-10-09", "98", "21.6 mins", "315.0 MT", "<span style='color:var(--emerald); font-weight:700;'>Optimal (Green)</span>"],
+          ["Vidisha Mandi Terminal", "2026-10-09", "116", "38.2 mins", "390.8 MT", "<span style='color:var(--amber); font-weight:700;'>Moderate Latency</span>"],
+          ["Hoshangabad Storage", "2026-10-09", "155", "42.0 mins", "512.4 MT", "<span style='color:var(--amber); font-weight:700;'>Moderate Latency</span>"]
+        ],
+        insight: "<strong>Agritech Pipeline KPI:</strong> Dynamic queue prioritization based on harvest moisture level and grain volume reduced farmer idle time by 65% across 4 major procurement nodes, avoiding spoilage risk."
+      },
+      {
+        title: "03. High-Frequency Banking Transaction Audit",
+        code: `<span class="sql-kw">SELECT</span>
+  t.transaction_id,
+  t.account_number,
+  a.account_holder,
+  t.transaction_type,
+  <span class="sql-fn">CONCAT</span>(<span class="sql-str">'₹'</span>, <span class="sql-fn">FORMAT</span>(t.amount, 2)) <span class="sql-kw">AS</span> tx_amount,
+  t.timestamp_utc,
+  <span class="sql-kw">CASE</span>
+    <span class="sql-kw">WHEN</span> t.amount > 200000 <span class="sql-kw">AND</span> t.location_mismatch = 1 <span class="sql-kw">THEN</span> <span class="sql-str">'FLAGGED: High Value Outlier'</span>
+    <span class="sql-kw">WHEN</span> t.velocity_count_1h > 5 <span class="sql-kw">THEN</span> <span class="sql-str">'FLAGGED: Rapid Velocity'</span>
+    <span class="sql-kw">ELSE</span> <span class="sql-str">'AUDITED: Compliant'</span>
+  <span class="sql-kw">END</span> <span class="sql-kw">AS</span> risk_assessment
+<span class="sql-kw">FROM</span> transactions_log t
+<span class="sql-kw">JOIN</span> accounts a <span class="sql-kw">ON</span> t.account_number = a.account_number
+<span class="sql-kw">WHERE</span> t.transaction_status = <span class="sql-str">'SUCCESS'</span>
+<span class="sql-kw">ORDER BY</span> t.timestamp_utc <span class="sql-kw">DESC</span>
+<span class="sql-kw">LIMIT</span> 4;`,
+        headers: ["TX ID", "Account #", "Account Holder", "Type", "Amount", "Timestamp", "Risk Assessment"],
+        rows: [
+          ["TX-90214", "AC-4011-89", "Rajesh Sharma", "IMPS Transfer", "₹2,50,000.00", "19:32:04", "<span style='color:#ef4444; font-weight:700;'>FLAGGED: High Value Outlier</span>"],
+          ["TX-90213", "AC-2204-12", "Pooja Verma", "UPI Merchant", "₹3,450.00", "19:31:40", "<span style='color:var(--emerald); font-weight:700;'>AUDITED: Compliant</span>"],
+          ["TX-90212", "AC-5890-33", "Amit Saxena", "ATM Cash Withdrawal", "₹10,000.00", "19:29:15", "<span style='color:var(--emerald); font-weight:700;'>AUDITED: Compliant</span>"],
+          ["TX-90211", "AC-7712-09", "Vikram Patel", "NEFT Settlement", "₹85,000.00", "19:25:52", "<span style='color:var(--emerald); font-weight:700;'>AUDITED: Compliant</span>"]
+        ],
+        insight: "<strong>Financial Ledger Security:</strong> Integrated C++ and SQL transactional integrity checks maintain atomic ledger persistence, catching out-of-band velocity spikes in under 15 milliseconds."
+      }
+    ];
+
+    let currentQueryIdx = 0;
+
+    function renderQueryView(idx) {
+      const q = SANDBOX_QUERIES[idx];
+      if (!q) return;
+      currentQueryIdx = idx;
+
+      const codeEl = document.getElementById("sql-query-code");
+      if (codeEl) codeEl.innerHTML = q.code;
+
+      const tableEl = document.getElementById("sandbox-table-output");
+      if (tableEl) {
+        tableEl.innerHTML = `
+          <table class="sandbox-table">
+            <thead>
+              <tr>${q.headers.map(h => `<th>${h}</th>`).join("")}</tr>
+            </thead>
+            <tbody>
+              ${q.rows.map(row => `<tr>${row.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      const insightEl = document.getElementById("sandbox-insight-text");
+      if (insightEl) insightEl.innerHTML = q.insight;
+
+      const statusEl = document.getElementById("sandbox-execution-status");
+      if (statusEl) statusEl.textContent = `Query Results (${q.rows.length} rows returned in ${Math.floor(Math.random() * 8 + 9)}ms)`;
+
+      const tabs = document.querySelectorAll(".query-tab");
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle("active", i === idx);
+      });
+    }
+
+    function selectQuery(idx) {
+      renderQueryView(idx);
+    }
+
+    function runSandboxQuery() {
+      const statusEl = document.getElementById("sandbox-execution-status");
+      const btn = document.getElementById("btn-run-query");
+      if (btn) btn.innerHTML = `<span>Executing...</span>`;
+      if (statusEl) statusEl.textContent = `Running query on laksh_analytics_db...`;
+
+      setTimeout(() => {
+        renderQueryView(currentQueryIdx);
+        if (btn) {
+          btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Execute SQL Query</span>
+          `;
+        }
+      }, 180);
+    }
 
     /* Subtle Interactive Constellation Canvas */
     (function initConstellation() {
@@ -2813,6 +4464,7 @@
 
     /* Initialize Default State */
     renderSkills("all");
+    renderQueryView(0);
     typeLoop();
   </script>
 </body>
